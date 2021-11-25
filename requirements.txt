@@ -1,0 +1,2 @@
+networkx
+streamlit-force-graph-simulator
