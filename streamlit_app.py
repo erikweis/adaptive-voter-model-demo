@@ -3,6 +3,7 @@ import streamlit as st
 
 import networkx as nx
 import random
+from collections import Counter
 
 st.title("Adaptive Voter Model")
 # Render the h1 block, contained in a frame of size 200x200.
@@ -26,7 +27,7 @@ def initialize_simulation():
 
 def run_simulation(F):
 
-    for _ in range(500):
+    for _ in range(2000):
 
         #new event
         F.new_event()
@@ -59,6 +60,14 @@ def run_simulation(F):
                 neighbor_color = F.graph.nodes[neighbor]['color']
                 F.set_node_attributes(node, color=neighbor_color)
 
+        # #stopping function
+        # colors = list(nx.get_node_attributes(F.graph,'color').values())
+        # counts = Counter(colors)
+        # print(counts)
+        # max_prop = max(counts.values())/F.graph.number_of_nodes()
+        # if max_prop > 0.9:
+        #     stop = True
+
     return F
 
 F = initialize_simulation()
@@ -74,6 +83,7 @@ def start_callback():
     F = run_simulation(F)
     st.session_state.graph = F.initial_graph_json
     st.session_state.events = F.events
+
 
 def stop_callback():
 
